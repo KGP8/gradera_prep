@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gradera Interview Prep — Guruprasad</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;--surface:#111;--surface2:#181818;--surface3:#222;
+  --border:#2a2a2a;--border2:#333;
+  --text:#f0f0f0;--text2:#999;--text3:#555;
+  --green:#00ff88;--green-dim:rgba(0,255,136,0.08);--green-border:rgba(0,255,136,0.2);
+  --yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;--purple:#8b5cf6;
+  --mono:'DM Mono',monospace;--display:'Syne',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--display);line-height:1.6}
+
+/* SIDEBAR NAV */
+.layout{display:flex;min-height:100vh}
+.sidebar{width:260px;flex-shrink:0;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--surface)}
+.sidebar-hdr{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border)}
+.sidebar-brand{font-size:16px;font-weight:800;letter-spacing:-0.5px}
+.sidebar-sub{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:3px}
+.sidebar-meta{font-family:var(--mono);font-size:10px;color:var(--green);margin-top:8px;padding:6px 8px;background:var(--green-dim);border:1px solid var(--green-border)}
+nav{padding:1rem 0}
+.nav-section{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);padding:0.5rem 1.5rem;margin-top:0.5rem}
+.nav-link{display:block;padding:7px 1.5rem;font-size:12px;color:var(--text2);cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;text-decoration:none}
+.nav-link:hover,.nav-link.active{color:var(--green);border-left-color:var(--green);background:var(--green-dim)}
+
+/* MAIN */
+.main{flex:1;max-width:900px;padding:2rem 2.5rem}
+
+/* SECTION */
+.section{margin-bottom:3rem;scroll-margin-top:2rem}
+.section-tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.15em;color:var(--green);margin-bottom:8px}
+.section-title{font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:0.5rem}
+.section-sub{font-size:14px;color:var(--text2);margin-bottom:1.5rem;line-height:1.7}
+.divider{height:1px;background:var(--border);margin-bottom:1.5rem}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);padding:1.25rem;margin-bottom:1rem}
+.card-title{font-size:14px;font-weight:600;margin-bottom:0.5rem;display:flex;align-items:center;gap:8px}
+.card-body{font-size:13px;color:var(--text2);line-height:1.8}
+.card-body p{margin-bottom:0.5rem}
+.card-body ul{padding-left:1.25rem}
+.card-body li{margin-bottom:4px}
+.card-body strong{color:var(--text)}
+
+/* TAGS */
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 8px;border:1px solid var(--border2);color:var(--text2);margin:2px;letter-spacing:0.04em}
+.tag.green{border-color:var(--green-border);color:var(--green)}
+.tag.yellow{border-color:rgba(245,158,11,0.3);color:var(--yellow)}
+.tag.red{border-color:rgba(239,68,68,0.3);color:var(--red)}
+
+/* Q&A BLOCKS */
+.qa-block{border:1px solid var(--border);margin-bottom:1.25rem;overflow:hidden}
+.qa-q{background:var(--surface2);padding:1rem 1.25rem;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.15s}
+.qa-q:hover{background:var(--surface3)}
+.qa-q .num{font-family:var(--mono);font-size:10px;color:var(--green);margin-right:10px;flex-shrink:0}
+.qa-q .toggle{font-family:var(--mono);font-size:14px;color:var(--text3);flex-shrink:0}
+.qa-a{display:none;padding:1.25rem;background:var(--surface);border-top:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.9}
+.qa-a.open{display:block}
+.qa-a strong{color:var(--text)}
+.qa-a .answer-script{background:var(--surface2);border-left:3px solid var(--green);padding:1rem;margin:0.75rem 0;font-size:12px;line-height:1.9;color:var(--text)}
+.qa-a .warning{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);padding:10px 12px;font-size:11px;color:var(--yellow);margin-top:0.75rem}
+.qa-a .tip{background:var(--green-dim);border:1px solid var(--green-border);padding:10px 12px;font-size:11px;color:var(--green);margin-top:0.75rem}
+
+/* STORY CARD */
+.story-card{border:1px solid var(--border);margin-bottom:1.25rem;overflow:hidden}
+.story-hdr{background:var(--surface2);padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center}
+.story-title{font-size:13px;font-weight:600}
+.story-badge{font-family:var(--mono);font-size:9px;padding:3px 8px;border:1px solid var(--green-border);color:var(--green)}
+.story-body{padding:1.25rem;background:var(--surface)}
+.story-step{display:flex;gap:12px;margin-bottom:1rem}
+.story-step:last-child{margin-bottom:0}
+.step-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--green);width:80px;flex-shrink:0;padding-top:2px}
+.step-text{font-size:13px;color:var(--text2);line-height:1.8;flex:1}
+.step-text strong{color:var(--text)}
+
+/* CHEATSHEET */
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
+.cheat-cell{background:var(--surface);padding:1rem}
+.cheat-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);margin-bottom:6px}
+.cheat-val{font-size:12px;color:var(--text);line-height:1.7}
+
+/* PROGRESS */
+.progress-bar{height:3px;background:var(--border);margin-bottom:1.5rem;position:relative}
+.progress-fill{height:3px;background:var(--green);width:0%;transition:width 0.5s}
+
+/* INTRO BANNER */
+.banner{background:var(--surface);border:1px solid var(--green-border);padding:1.25rem 1.5rem;margin-bottom:2rem;display:flex;align-items:flex-start;gap:1rem}
+.banner-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+.banner-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.banner-text{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .main{padding:1.25rem}
+  .cheat-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-hdr">
+    <div class="sidebar-brand">mrkgp<span style="color:var(--green)">.</span></div>
+    <div class="sidebar-sub">Gradera Interview Prep</div>
+    <div class="sidebar-meta">Tomorrow · 12:00 PM IST</div>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <a class="nav-link active" onclick="scrollTo('overview')">Company & Role</a>
+    <a class="nav-link" onclick="scrollTo('stack')">Stack Match Analysis</a>
+    <a class="nav-link" onclick="scrollTo('cheatsheet')">Quick Cheatsheet</a>
+
+    <div class="nav-section">Stories</div>
+    <a class="nav-link" onclick="scrollTo('intro')">Self Introduction</a>
+    <a class="nav-link" onclick="scrollTo('stories')">Project Stories (STAR)</a>
+
+    <div class="nav-section">Technical</div>
+    <a class="nav-link" onclick="scrollTo('react')">React & Architecture</a>
+    <a class="nav-link" onclick="scrollTo('typescript')">TypeScript</a>
+    <a class="nav-link" onclick="scrollTo('payments')">Payments & Webhooks</a>
+    <a class="nav-link" onclick="scrollTo('performance')">Performance</a>
+    <a class="nav-link" onclick="scrollTo('testing')">Testing</a>
+    <a class="nav-link" onclick="scrollTo('leadership')">Lead Questions</a>
+
+    <div class="nav-section">HR</div>
+    <a class="nav-link" onclick="scrollTo('salary')">Salary & Expectations</a>
+    <a class="nav-link" onclick="scrollTo('gaps')">Gap Handling</a>
+    <a class="nav-link" onclick="scrollTo('questions')">Your Questions to Ask</a>
+  </nav>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- OVERVIEW -->
+<div class="section" id="overview">
+  <div class="section-tag">01 — Company & Role</div>
+  <div class="section-title">Gradera — Lead Full Stack UI Engineer</div>
+  <div class="section-sub">Hyderabad · Full-time · Mid-level · "Software-Orchestrated Services" platform</div>
+  <div class="divider"></div>
+
+  <div class="banner">
+    <div class="banner-icon">🎯</div>
+    <div>
+      <div class="banner-title">This is a strong match — don't undersell yourself</div>
+      <div class="banner-text">Their stack is React + TypeScript + Next.js + ShadCN + Tailwind + Node.js. You have all of these in production. The "Lead" in the title means they want someone who owns architecture and mentors — which you've been doing across 5 products.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">What Gradera builds</div>
+    <div class="card-body">
+      <p>Gradera defines a category called <strong>"Software-Orchestrated Services (SoS)"</strong> — AI-powered digital workers that automate work across enterprise value chains. Think intelligent agents that replace manual business workflows.</p>
+      <p>Their platform is agentic — real-time, AI-driven, with complex role-based access. Your RDR Tech (real-time workflow) and ProCoach (multi-role RBAC) experience maps directly to what they're building.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">What they want from this hire</div>
+    <div class="card-body">
+      <ul>
+        <li>Someone to <strong>lead the design system</strong> and component library (Storybook + ShadCN)</li>
+        <li><strong>Frontend architecture ownership</strong> — not just features</li>
+        <li>Backend integration skills — REST, gRPC, NestJS</li>
+        <li>AI-assisted development comfort (Cursor, Copilot)</li>
+        <li>Someone who can <strong>mentor and set standards</strong></li>
+        <li>Performance obsession — sub-second interactions</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- STACK MATCH -->
+<div class="section" id="stack">
+  <div class="section-tag">02 — Stack Match</div>
+  <div class="section-title">Where you're strong vs gaps</div>
+  <div class="divider"></div>
+
+  <div class="card">
+    <div class="card-title"><span style="color:var(--green)">✓</span> Strong match — speak confidently</div>
+    <div class="card-body">
+      <div style="margin-bottom:8px">
+        <span class="tag green">React + TypeScript</span>
+        <span class="tag green">Next.js (SSR/SSG)</span>
+        <span class="tag green">ShadCN UI</span>
+        <span class="tag green">Tailwind CSS</span>
+        <span class="tag green">Node.js</span>
+        <span class="tag green">Jest</span>
+        <span class="tag green">REST APIs</span>
+        <span class="tag green">RBAC / Auth</span>
+        <span class="tag green">WebSockets</span>
+        <span class="tag green">Stripe/Razorpay</span>
+        <span class="tag green">Vercel</span>
+        <span class="tag green">Figma handoff</span>
+        <span class="tag green">Cursor / AI tools</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span style="color:var(--yellow)">~</span> Partial — acknowledge + bridge</div>
+    <div class="card-body">
+      <div style="margin-bottom:8px">
+        <span class="tag yellow">NestJS</span>
+        <span class="tag yellow">Playwright</span>
+        <span class="tag yellow">Storybook</span>
+        <span class="tag yellow">GraphQL</span>
+      </div>
+      <p style="font-size:12px;margin-top:8px"><strong>NestJS:</strong> "I have strong Node.js + Express in production. NestJS uses the same patterns — decorators, modules, services. I can get productive quickly."</p>
+      <p style="font-size:12px"><strong>Playwright:</strong> "I use Jest + RTL for unit and integration tests. E2E with Playwright is next on my learning list — the concepts transfer directly."</p>
+      <p style="font-size:12px"><strong>Storybook:</strong> "Haven't set it up from scratch but I've worked with component libraries and design systems at the level Storybook documents."</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span style="color:var(--red)">✗</span> Gaps — be honest, don't freeze</div>
+    <div class="card-body">
+      <div style="margin-bottom:8px">
+        <span class="tag red">gRPC / Protobuf</span>
+        <span class="tag red">Karate (API testing)</span>
+      </div>
+      <p style="font-size:12px;margin-top:8px"><strong>gRPC:</strong> "Haven't used gRPC in production — my backend integration experience is REST-based. I understand the concept of contract-first APIs and binary serialization. Happy to learn it in context."</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHEATSHEET -->
+<div class="section" id="cheatsheet">
+  <div class="section-tag">03 — Quick Cheatsheet</div>
+  <div class="section-title">Numbers & facts to remember</div>
+  <div class="divider"></div>
+
+  <div class="cheat-grid">
+    <div class="cheat-cell">
+      <div class="cheat-label">Experience</div>
+      <div class="cheat-val">4+ years full-time at Code Stream<br>1 year freelance before that<br>= 5+ years total</div>
+    </div>
+    <div class="cheat-cell">
+      <div class="cheat-label">Products Built</div>
+      <div class="cheat-val">5 production apps from scratch<br>ProCoach, RDR Tech, KhetiValah,<br>SGreens ERP, Veeranjaneya ERP</div>
+    </div>
+    <div class="cheat-cell">
+      <div class="cheat-label">ProCoach Numbers</div>
+      <div class="cheat-val">500+ active users<br>2,000+ monthly enrollments<br>&lt;2% abandonment rate<br>4 roles: Coach/Learner/Parent/Admin</div>
+    </div>
+    <div class="cheat-cell">
+      <div class="cheat-label">Stripe Race Condition</div>
+      <div class="cheat-val">3% payment failure → 0%<br>Fixed in 4 hours<br>Polling fallback, 3 retries over 8s</div>
+    </div>
+    <div class="cheat-cell">
+      <div class="cheat-label">RDR Tech</div>
+      <div class="cheat-val">1,500+ concurrent workflows<br>Native WebSocket (zero polling)<br>Role-based state machine</div>
+    </div>
+    <div class="cheat-cell">
+      <div class="cheat-label">KhetiValah</div>
+      <div class="cheat-val">300+ vendors, 1,000+ bookings<br>2,000+ product listings<br>GST-compliant billing</div>
+    </div>
+    <div class="cheat-cell">
+      <div class="cheat-label">Current CTC</div>
+      <div class="cheat-val">10.8 LPA<br>Expected: 18-22 LPA<br>Don't reveal current first</div>
+    </div>
+    <div class="cheat-cell">
+      <div class="cheat-label">Location</div>
+      <div class="cheat-val">Tirupati, AP<br>Open to Hyderabad relocation<br>Immediately available</div>
+    </div>
+  </div>
+</div>
+
+<!-- SELF INTRO -->
+<div class="section" id="intro">
+  <div class="section-tag">04 — Self Introduction</div>
+  <div class="section-title">Tell me about yourself</div>
+  <div class="section-sub">Read this out loud 3 times tonight. Make it your own words.</div>
+  <div class="divider"></div>
+
+  <div class="card">
+    <div class="card-title">60-second version (use this)</div>
+    <div class="card-body">
+      <div class="answer-script" style="background:var(--surface2);border-left:3px solid var(--green);padding:1rem;margin-top:0.5rem;font-size:13px;line-height:2;color:var(--text)">
+        "I'm Guruprasad, a frontend engineer with around 5 years of experience — 4 years full-time at Code Stream Technology and about a year of freelance before that.
+        <br><br>
+        At Code Stream, I've led frontend development across 5 production applications from scratch — a coaching marketplace, a real-time workflow platform, an agricultural marketplace, and two ERP systems. These are live products with real users — not internal tools.
+        <br><br>
+        My core stack is React, Next.js, TypeScript, Tailwind, and ShadCN — which matches exactly what Gradera uses. I've done deep work on multi-role RBAC systems, payment integrations with Stripe and Razorpay, real-time WebSocket features, and performance optimization on large dashboards.
+        <br><br>
+        I'm also someone who uses AI tools like Cursor and Claude Code heavily in my workflow — so the agentic platform angle at Gradera genuinely interests me.
+        <br><br>
+        I'm looking for a role where I can own architecture and drive technical direction — which is what the Lead role at Gradera is about."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT STORIES -->
+<div class="section" id="stories">
+  <div class="section-tag">05 — Project Stories</div>
+  <div class="section-title">STAR format stories</div>
+  <div class="section-sub">These are your strongest talking points. Know all 3 cold.</div>
+  <div class="divider"></div>
+
+  <div class="story-card">
+    <div class="story-hdr">
+      <div class="story-title">Story 1 — Stripe Race Condition (ProCoach)</div>
+      <div class="story-badge">Most Important</div>
+    </div>
+    <div class="story-body">
+      <div class="story-step">
+        <div class="step-label">Situation</div>
+        <div class="step-text">On ProCoach, we had a production issue where <strong>3% of users were seeing payment failure screens despite their Stripe charge succeeding.</strong> Real money was being taken but users thought their enrollment failed.</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Root Cause</div>
+        <div class="step-text">The frontend was reading enrollment status immediately after the Stripe redirect, but the <strong>webhook from Stripe to our backend was arriving 2-4 seconds later</strong> — so the enrollment wasn't confirmed in the DB yet when the UI checked.</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Action</div>
+        <div class="step-text">I implemented a <strong>polling fallback</strong> — after payment redirect, the frontend polls the enrollment status endpoint up to 3 times with 8-second intervals before showing any failure state. This gave the webhook time to arrive and be processed.</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Result</div>
+        <div class="step-text"><strong>Payment failures dropped from 3% to 0%.</strong> Fixed and deployed within 4 hours of identifying the issue. Added the same pattern as a standard across all payment flows.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="story-card">
+    <div class="story-hdr">
+      <div class="story-title">Story 2 — Real-time WebSocket System (RDR Tech)</div>
+      <div class="story-badge">Architecture Story</div>
+    </div>
+    <div class="story-body">
+      <div class="story-step">
+        <div class="step-label">Situation</div>
+        <div class="step-text">RDR Tech was an audit and taxation workflow platform. The original system was <strong>email-based coordination</strong> — teams would email each other when task statuses changed. Completely manual, error-prone.</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Challenge</div>
+        <div class="step-text">We needed <strong>real-time task status updates</strong> across all users without page refreshes — and the system needed to handle 1,500+ concurrent active workflows.</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Action</div>
+        <div class="step-text">Integrated <strong>native WebSocket</strong> on the frontend — consumed real-time events from the backend. Built a role-based state machine controlling which roles can move tasks between stages. Not just UI access control — actual business logic.</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Result</div>
+        <div class="step-text">Handles <strong>1,500+ concurrent workflows with zero polling</strong>. Replaced the entire email coordination process. Teams get live updates instantly.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="story-card">
+    <div class="story-hdr">
+      <div class="story-title">Story 3 — Multi-role RBAC Architecture (ProCoach)</div>
+      <div class="story-badge">Lead-level Story</div>
+    </div>
+    <div class="story-body">
+      <div class="story-step">
+        <div class="step-label">Situation</div>
+        <div class="step-text">ProCoach had 4 user roles — Coach, Learner, Parent, and Admin — all using the <strong>same codebase</strong>. Each role sees completely different dashboards, routes, and features.</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Challenge</div>
+        <div class="step-text">How do you architect a single React codebase that serves 4 different product experiences without becoming unmaintainable spaghetti?</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Action</div>
+        <div class="step-text">Built a <strong>JWT-based RBAC system</strong> with role-scoped route guards, API-level permissions, and a Context API state layer that exposes only what each role needs. Components are role-aware but not role-polluted — the role check happens at the routing and data layer, not in every component.</div>
+      </div>
+      <div class="story-step">
+        <div class="step-label">Result</div>
+        <div class="step-text"><strong>500+ active users</strong> across all 4 roles on one unified system. New role-specific features can be added without touching other roles' code.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REACT QUESTIONS -->
+<div class="section" id="react">
+  <div class="section-tag">06 — Technical</div>
+  <div class="section-title">React & Architecture Questions</div>
+  <div class="divider"></div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q1</span>How do you manage state in large React applications?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"My default is Context API + useReducer for most production apps — it keeps state co-located and avoids over-engineering. I've used this across all 5 production apps at Code Stream. For truly global state that many unrelated components need, I'd reach for Zustand or Redux Toolkit — but I start simple and add complexity only when justified. The key is not treating all state the same — server state, UI state, and form state are different problems. I use React Hook Form for form state, TanStack Query patterns for server state, and Context for app-level state."</div>
+      <div class="tip">Mention ProCoach — 4 roles, complex state, Context API held up fine at 500+ users.</div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q2</span>How do you approach building a design system from scratch?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"I start with tokens — spacing scale, color palette, typography — defined as CSS variables or Tailwind config values. Then I build primitive components: Button, Input, Card, Modal. Everything else composes from these. For ProCoach I used ShadCN UI as the foundation — it gives you accessible, unstyled components that you fully own. You take the code into your repo, you're not locked into a library version. Then I layer Tailwind variants on top. The key principle is that components should be composable, not configurable — fewer props, more composition."</div>
+      <div class="tip">This is directly what Gradera wants — ShadCN + Tailwind design system ownership.</div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q3</span>When do you use SSR vs SSG vs CSR in Next.js?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"I choose based on data freshness and SEO needs. SSG for pages where content doesn't change per user — marketing pages, documentation. SSR for pages that need fresh data per request and SEO matters — public profiles, product listings. CSR for authenticated dashboards where SEO doesn't matter and data changes per user. In ProCoach, I deliberately chose SSR for public coach profile pages — they needed to be indexed by Google for coaches to get organic leads. The dashboard behind login is CSR. I didn't apply SSR globally — that would be over-engineering."</div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q4</span>How do you structure a React project for scalability?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"Feature-based folder structure over type-based. Instead of /components, /hooks, /utils — I use /features/enrollment, /features/auth, /features/dashboard. Each feature has its own components, hooks, types, and API calls co-located. Shared code lives in /shared or /lib. This scales because teams can own features independently without merge conflicts. API calls go through a centralized Axios service layer with interceptors for auth tokens and retry logic — one place to change, all features benefit."</div>
+    </div>
+  </div>
+</div>
+
+<!-- TYPESCRIPT -->
+<div class="section" id="typescript">
+  <div class="section-tag">07 — Technical</div>
+  <div class="section-title">TypeScript Questions</div>
+  <div class="divider"></div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q5</span>How do you use TypeScript in React — give a real example?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"TypeScript is non-negotiable for me in production. The biggest value is at API boundaries — I define response types for every API call, so if the backend changes a field name, TypeScript catches it at compile time instead of runtime. For components, I type all props strictly — no any. For the RBAC system in ProCoach, I defined a Role enum and used it as a discriminated union — the TypeScript compiler would error if I forgot to handle a role in a switch statement. For forms with React Hook Form + Zod, I infer the TypeScript types from the Zod schema — single source of truth for validation and types."</div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q6</span>What are generics in TypeScript and when do you use them?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"Generics let you write reusable code that works with multiple types while maintaining type safety. I use them most for API response wrappers — like a generic ApiResponse&lt;T&gt; type where T is the data payload. Also for custom hooks — a useFetch&lt;T&gt; hook that returns typed data regardless of what you're fetching. In the Axios service layer at Code Stream, I typed the get and post methods with generics so every API call returns a properly typed response — no manual casting needed."</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENTS -->
+<div class="section" id="payments">
+  <div class="section-tag">08 — Technical</div>
+  <div class="section-title">Payments & Webhooks</div>
+  <div class="divider"></div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q7</span>Walk me through how you handle payment integration end to end.</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"Frontend creates a payment intent via our backend — never directly with Stripe. Backend creates the intent and returns a client secret. Frontend uses Stripe.js to render the payment UI and confirm the payment with the client secret. On success, Stripe redirects to a return URL. Here's the critical part — the frontend CANNOT trust the redirect alone. The actual confirmation happens via webhook: Stripe sends a checkout.session.completed or payment_intent.succeeded event to our backend, which then updates the enrollment status in the DB. The frontend polls for enrollment confirmation before showing success. This is exactly the race condition I solved in ProCoach."</div>
+      <div class="tip">This answer proves you understand the full payment lifecycle — most candidates only know the frontend part.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PERFORMANCE -->
+<div class="section" id="performance">
+  <div class="section-tag">09 — Technical</div>
+  <div class="section-title">Performance Optimization</div>
+  <div class="divider"></div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q8</span>How did you optimize a slow React dashboard?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"The RDR Tech dashboard had a performance issue — it managed 1,500+ workflows and the initial load was sluggish. I attacked it in layers. First, route-level code splitting with React.lazy and Suspense — the dashboard bundle was huge because all routes loaded upfront. Splitting reduced initial bundle by ~40%. Second, component memoization — the workflow list was re-rendering on every state update even for components that didn't change. I added React.memo on list items and useMemo for expensive filtered/sorted arrays. Third, virtualization for long lists — instead of rendering all 1,500 items in the DOM, only render what's visible. The combination brought the dashboard to sub-2-second load on real user devices."</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTING -->
+<div class="section" id="testing">
+  <div class="section-tag">10 — Technical</div>
+  <div class="section-title">Testing Questions</div>
+  <div class="divider"></div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q9</span>What do you test and what do you not test?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"I focus testing on high-risk paths, not coverage numbers. I test: payment flows end to end — a bug here costs real money. Form validation logic — edge cases users hit constantly. RBAC — if a role can access something they shouldn't, that's a security issue. I don't test: simple presentational components with no logic, third-party library internals, or things that change every sprint. With Jest and React Testing Library, I write tests that simulate real user interactions — click a button, expect a state change — not implementation details. Testing implementation details makes tests brittle and maintenance-heavy."</div>
+    </div>
+  </div>
+</div>
+
+<!-- LEADERSHIP -->
+<div class="section" id="leadership">
+  <div class="section-tag">11 — Lead Questions</div>
+  <div class="section-title">Technical Leadership</div>
+  <div class="section-sub">Gradera wants a Lead — expect these questions.</div>
+  <div class="divider"></div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q10</span>How do you mentor junior developers?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"At Code Stream, I was the most senior frontend person — so I set the patterns others followed. Code reviews were my main mentoring tool. I'd comment not just on what to change but why — explaining the principle behind the feedback. When someone wrote a component that was doing too much, I'd show them the single responsibility principle in context of our actual code, not abstract theory. I also set up the patterns upfront — the Axios service layer, the form validation approach, the folder structure — so juniors had clear examples to follow rather than figuring it out themselves. Good patterns are better mentoring than frequent corrections."</div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q11</span>How do you handle technical debt?</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"I distinguish between intentional and unintentional debt. Intentional debt — we know this is a shortcut, we're taking it to ship faster, we'll pay it back — is fine if documented. Unintentional debt — messy code that happened by accident — needs to be caught in code review. In practice I'd spend 20% of sprint capacity on debt reduction — not as a separate cleanup sprint that never happens, but baked into every sprint. The key is making the debt visible — a tech debt backlog item with business impact framing: 'this component is 800 lines and adding features takes 3x longer than it should.'"</div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q" onclick="toggleQA(this)">
+      <span><span class="num">Q12</span>Describe how you'd set up a new frontend project from scratch.</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="qa-a">
+      <div class="answer-script">"Next.js with TypeScript as the base — App Router if we need SSR flexibility. Tailwind for styling with a custom config for the design tokens. ShadCN UI for component primitives — copied into the repo, not a dependency. ESLint + Prettier with strict TypeScript config — enforced in CI so no one merges bad code. Absolute imports configured so no ../../../ paths. Feature-based folder structure from day one. Centralized API service layer with typed responses. Husky pre-commit hooks for lint and type check. Vercel for deployment with preview URLs on every PR. This is exactly how I've started every product at Code Stream."</div>
+      <div class="tip">This answer is gold for Gradera — it shows you think at the system level, not just feature level.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SALARY -->
+<div class="section" id="salary">
+  <div class="section-tag">12 — HR Round</div>
+  <div class="section-title">Salary & Expectations</div>
+  <div class="divider"></div>
+
+  <div class="card">
+    <div class="card-title">If they ask current CTC</div>
+    <div class="card-body">
+      <div class="answer-script">"I'm currently at 10.8 LPA. Based on the Lead role scope and my production experience across 5 platforms, I'm targeting 18-22 LPA for the right opportunity."</div>
+      <div class="warning">Don't reveal current CTC first. Only if directly asked. Let them anchor first.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">If they ask expected CTC first</div>
+    <div class="card-body">
+      <div class="answer-script">"For a Lead role with this tech stack and Hyderabad location, I'm targeting 18-22 LPA. I'm flexible depending on the complete package — role scope, growth, and what I'll be owning."</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">If they ask about relocation</div>
+    <div class="card-body">
+      <div class="answer-script">"I'm currently in Tirupati. Hyderabad is my preferred city and I'm fully open to relocating. I can start immediately."</div>
+    </div>
+  </div>
+</div>
+
+<!-- GAPS -->
+<div class="section" id="gaps">
+  <div class="section-tag">13 — Handle Honestly</div>
+  <div class="section-title">Gap Handling</div>
+  <div class="divider"></div>
+
+  <div class="card">
+    <div class="card-title">If they ask about your degree</div>
+    <div class="card-body">
+      <div class="answer-script">"I completed a B.Sc. in Computer Science from ISBM University in 2023 — distance mode while working full-time. The certificate is pending a university portal migration expected mid-2026. I can provide enrollment confirmation or marksheets if needed. My work speaks more than the certificate — 5 production applications, real users, real businesses."</div>
+      <div class="tip">Say it confidently. Don't over-explain or apologize. It's a bureaucratic issue, not a skills issue.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">If they ask why Lead role with 4 years exp</div>
+    <div class="card-body">
+      <div class="answer-script">"I've been operating at lead level for the last 2+ years — I was the most senior frontend person on every product, set the architecture, defined the patterns, reviewed code, and owned delivery. The title didn't say Lead but the responsibility did. I'm ready to formalize that into an official Lead role."</div>
+    </div>
+  </div>
+</div>
+
+<!-- YOUR QUESTIONS -->
+<div class="section" id="questions">
+  <div class="section-tag">14 — End of Interview</div>
+  <div class="section-title">Questions to ask Gradera</div>
+  <div class="section-sub">Always ask 2-3 questions. Shows you're evaluating them too.</div>
+  <div class="divider"></div>
+
+  <div class="card">
+    <div class="card-body">
+      <ul>
+        <li style="margin-bottom:12px"><strong>"What does the current frontend architecture look like and where do you see the biggest gaps I'd be helping solve?"</strong></li>
+        <li style="margin-bottom:12px"><strong>"How mature is the design system right now — are we building it from scratch or evolving something existing?"</strong></li>
+        <li style="margin-bottom:12px"><strong>"What does the team structure look like — how many engineers, how do frontend and backend collaborate?"</strong></li>
+        <li style="margin-bottom:12px"><strong>"What does the agentic platform mean in practice for the UI — are we building real-time agent interaction UIs?"</strong></li>
+        <li><strong>"What would success look like for this role in the first 3 months?"</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+function toggleQA(el){
+  const ans = el.nextElementSibling;
+  const toggle = el.querySelector('.toggle');
+  const isOpen = ans.classList.contains('open');
+  ans.classList.toggle('open', !isOpen);
+  toggle.textContent = isOpen ? '+' : '−';
+}
+
+function scrollTo(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// auto highlight nav on scroll
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', ()=>{
+  let current = '';
+  sections.forEach(s=>{ if(window.scrollY >= s.offsetTop - 100) current = s.id; });
+  navLinks.forEach(l=>{ l.classList.remove('active'); if(l.getAttribute('onclick')?.includes(current)) l.classList.add('active'); });
+});
+</script>
+</body>
+</html>
